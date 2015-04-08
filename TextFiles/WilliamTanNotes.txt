@@ -1,0 +1,12 @@
+William Tan 
+Period 1 Advanced Computer Science
+4/7/2015
+
+Diary Application Features:
+
+1. Packed with functions: notepad, contacts/reminder system.
+2. Sleek Design: Login and transitioning.
+3. User Friendly: Includes complex failsafes and intuitive UI.
+4. Advanced Saving: Data is read from and saved to text files.
+
+

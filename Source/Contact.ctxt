@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=firstName\ lastName\ email\ age\ gender\ phoneNumber\ imgDirectory
+comment0.target=Contact(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment1.params=
+comment1.target=java.lang.String\ getFirstName()
+comment2.params=
+comment2.target=java.lang.String\ getLastName()
+comment3.params=
+comment3.target=java.lang.String\ getAge()
+comment4.params=
+comment4.target=java.lang.String\ getGender()
+comment5.params=
+comment5.target=java.lang.String\ getImgDirectory()
+comment6.params=
+comment6.target=java.lang.String\ toStringGUI()
+comment7.params=
+comment7.target=java.lang.String\ toString()
+numComments=8

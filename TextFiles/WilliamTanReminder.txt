@@ -1,0 +1,9 @@
+TITLE | MESSAGE | LOCATION | ALARM MESSAGE | START DATE | END DATE
+Pizza Party|There will be unlimited pizza, drinks, and chips!|1234 Rainbow Road|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder1.png
+CoderDojo LA|Remember to bring teaching materials!|Palos Verdes Peninsula Library|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder2.png
+Taiwan Night Market|Bring cool clothing and eat the great street food!|Tapei, Taiwan|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder3.png
+Tennis Match|Against my archrival, Ray Bai!|Beach Courts|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder4.png
+Ski Trip|I will be snowboarding against Tony Hawk!|Mammoth Mountain|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder5.png
+Movie Night|I will be watching Naruto with Brandon Lin!|Regal Cinemas 12|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder6.png
+Pool Party|Perfect for hot weather and relaxing!|YMCA|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder7.png
+Personal Trainer|Getting ripped for summer!|Equinox|HURRY UP|Thu April 7 20:20:20 JST 2015|Thu April 10 20:20:20 JST 2015|reminder8.png
