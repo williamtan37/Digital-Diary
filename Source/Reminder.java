@@ -50,9 +50,9 @@ public class Reminder
         String result;
         
         result = "Description: " + message;
-        result += "\nWhen: " + endDate.toGMTString();
+        result += "\nWhen: " + endDate.toString();
         result += "\nWhere: " + location;
-        result += "\nDate created: " + startDate.toGMTString();
+        result += "\nDate created: " + startDate.toString();
         
         return result;
     }

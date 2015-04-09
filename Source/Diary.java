@@ -286,8 +286,8 @@ public class Diary {
 
     public void addReminderUI()
     {
-        remindersOptionsButton = new JButton("Reminder Options");
-        remindersButton = new JButton("Please Select a Reminder");
+        remindersOptionsButton = new JButton("Events Options");
+        remindersButton = new JButton("Upcoming Events");
         remindersButton.setPreferredSize(new Dimension(465,40));
         remindersOptionsButton.setPreferredSize(new Dimension(465,40));
         GridBagConstraints c = new GridBagConstraints();
@@ -335,8 +335,8 @@ public class Diary {
     }
 
     public void addContactsUI(){
-        contactsButton = new JButton("Please Select a Contact");
-        contactsOptionsButton = new JButton("Contact Options");
+        contactsButton = new JButton("Contacts");
+        contactsOptionsButton = new JButton("Contacts Options");
         contactsButton.setPreferredSize(new Dimension(203,40));
         contactsOptionsButton.setPreferredSize(new Dimension(203,40));
         contactsScrollPane = new JScrollPane();        
@@ -373,7 +373,7 @@ public class Diary {
                         contactImgDirectory = selectedContact.getImgDirectory();
                     }
                     else{      
-                        contactsButton.setText("Please Select a Contact");
+                        contactsButton.setText("Contacts");
                         selectedContact = null;
                     }
                 }
@@ -382,7 +382,7 @@ public class Diary {
         contactsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if(selectedContact == null){
-                        JOptionPane.showMessageDialog(frame,"Please select a contact.");
+                        JOptionPane.showMessageDialog(frame, "Please select a contact.","Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else{
                         Icon img = new ImageIcon("/Users/SuchenTan/Desktop/Digital Diary/Images/" + contactImgDirectory);
@@ -393,8 +393,8 @@ public class Diary {
 
         contactsOptionsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    String[] buttons = {"Edit Contact","Sort Contacts", "Remove Contact", "Add Contact"};    
-                    int returnValue = JOptionPane.showOptionDialog(null, "                              What would you like to do?", "Options",JOptionPane.DEFAULT_OPTION, 0, transparentImg, buttons, null);
+                    String[] buttons = {"Edit Contacts","Sort Contacts", "Remove Contacts", "Add Contacts"};    
+                    int returnValue = JOptionPane.showOptionDialog(null, "                                                   What would you like to do?", "Contacts Options",JOptionPane.DEFAULT_OPTION, 0, transparentImg, buttons, null);
                     contactOptions(returnValue);        
                 }
             }); 
@@ -418,7 +418,7 @@ public class Diary {
         remindersButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if(selectedReminder == null){
-                        JOptionPane.showMessageDialog(frame,"Please select a reminder first.");
+                        JOptionPane.showMessageDialog(frame, "Please select an event.","Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else{
                         Icon img = new ImageIcon("/Users/SuchenTan/Desktop/Digital Diary/Images/" + reminderImgDirectory);
@@ -429,8 +429,8 @@ public class Diary {
 
         remindersOptionsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    String[] buttons = {"Edit Reminder","Sort Reminder" ,"Remove Reminder","Add Reminder"};    
-                    int returnValue = JOptionPane.showOptionDialog(null, "                              What would you like to do?", "Options",JOptionPane.DEFAULT_OPTION, 0, transparentImg, buttons, null);
+                    String[] buttons = {"Edit Reminders","Sort Reminders" ,"Remove Reminders","Add Reminders"};    
+                    int returnValue = JOptionPane.showOptionDialog(null, "                                                        What would you like to do?", "Events Options",JOptionPane.DEFAULT_OPTION, 0, transparentImg, buttons, null);
                     reminderOptions(returnValue);  
                 }
             });
@@ -445,7 +445,7 @@ public class Diary {
                         reminderImgDirectory = selectedReminder.getImgDirectory();
                     }
                     else{      
-                        remindersButton.setText("Please Select a Reminder!");
+                        remindersButton.setText("Upcoming Events");
                         selectedReminder = null;
                     }
                 }
@@ -455,12 +455,96 @@ public class Diary {
     public void reminderOptions(int optionValue)
     {
         String targetDeleteReminder;
+        Reminder newReminder;
+        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
         if(optionValue == 0){
             editReminder();
         }
 
         else if(optionValue == 1){
+            sortReminders();
         }
+        else if(optionValue == 2){
+
+            targetDeleteReminder = JOptionPane.showInputDialog("What is the title of the event you want to delete?");
+            if(targetDeleteReminder != null)
+                deleteReminder(targetDeleteReminder);
+        }
+        else if(optionValue == 3){
+            String title = JOptionPane.showInputDialog("What do you want to call your event?");
+            String message = JOptionPane.showInputDialog("How do you want tp describe your event?");
+            String location = JOptionPane.showInputDialog("Where will your event be?");
+            String endDateString = JOptionPane.showInputDialog("When will it take place?");
+            String alarm = JOptionPane.showInputDialog("What do you want your alarm to say");
+            Date endDate = null;
+            Date startDate = new Date();
+
+            try{
+                endDate = df.parse(endDateString);
+
+                newReminder = new Reminder(title,message,location,alarm,startDate,endDate,"temp");
+
+                addReminder(newReminder,-1);
+            }catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(frame, "Event creation failed!","Error", JOptionPane.ERROR_MESSAGE); 
+            }
+
+        }
+    }
+
+    public void sortReminders()
+    {
+        String[] buttons =  {"Date (Newest-Oldest)","Date (Oldest-Newest)", "Title (A-Z)"};    
+        int returnValue = JOptionPane.showOptionDialog(null, "                               What do you want to sort your contacts by?", "Sort Contacts",JOptionPane.DEFAULT_OPTION, 0, transparentImg, buttons, null);
+
+        if(returnValue == 0){
+            Collections.sort(reminderDatabase, new Comparator<Reminder>() {
+                    public int compare(Reminder reminder1, Reminder reminder2){
+                        Date dateReminder1 = reminder1.getEndDate();
+                        Date dateReminder2 = reminder2.getEndDate();
+
+                        if(dateReminder1.before(dateReminder2))
+                            return 1;
+                        else if(dateReminder2.before(dateReminder1))
+                            return -1;
+                        else return 0;
+                    }
+                });
+        }
+        else if(returnValue == 1){
+            Collections.sort(reminderDatabase, new Comparator<Reminder>() {
+                    public int compare(Reminder reminder1, Reminder reminder2){
+                        Date dateReminder1 = reminder1.getEndDate();
+                        Date dateReminder2 = reminder2.getEndDate();
+
+                        if(dateReminder2.before(dateReminder1))
+                            return 1;
+                        else if(dateReminder1.before(dateReminder2))
+                            return -1;
+                        else return 0;
+                    }
+                });
+        }
+        else if(returnValue == 2){
+            Collections.sort(reminderDatabase, new Comparator<Reminder>() {
+                    public int compare(Reminder reminder1, Reminder reminder2){
+                        String titleReminder1 = reminder1.getTitle();
+                        String titleReminder2 = reminder2.getTitle();
+
+                        if(titleReminder1.compareTo(titleReminder2) > 0)
+                            return 1;
+                        else if(titleReminder1.compareTo(titleReminder2) < 0)
+                            return -1;
+                        else return 0;
+                    }
+                });
+        }
+
+        
+        reminderList.setListData(reminderDatabase.toArray());
+        validateAndRepaint();
+        updateTextFile("Reminder");
     }
 
     public void contactOptions(int optionValue)
@@ -477,7 +561,9 @@ public class Diary {
         }
         else if(optionValue == 2){
             targetDeleteName = JOptionPane.showInputDialog("What is the name of the person you want to delete?");
-            deleteContact(targetDeleteName);
+
+            if(targetDeleteName != null)
+                deleteContact(targetDeleteName);
         }
         else if(optionValue == 3){
             firstName = JOptionPane.showInputDialog("What is your first name?");
@@ -563,6 +649,7 @@ public class Diary {
 
         contactsList.setListData(contactDatabase.toArray());
         validateAndRepaint();
+        updateTextFile("Contact");
     }
 
     public void editContacts(){
@@ -573,64 +660,66 @@ public class Diary {
         Icon img;
         Contact editedContact;
 
-        for(int i = 0; i< contactDatabase.size();i++){
-            if(fullName.equals(contactDatabase.get(i).getFirstName() + " " + contactDatabase.get(i).getLastName())){                
-                contactIndex = i;
-                isFound = true;
-                break;
-            }
-        }
-
-        img = new ImageIcon("/Users/SuchenTan/Desktop/Digital Diary/Images/" + contactDatabase.get(contactIndex).getImgDirectory());
-        imgDirectory = contactDatabase.get(contactIndex).getImgDirectory();
-        if(isFound == false){
-            JOptionPane.showMessageDialog(frame, "Please enter a valid name!");
-        }
-
-        else{
-            Panel namePanel = new Panel(), agePanel = new Panel(), genderPanel = new Panel(), emailPanel = new Panel(),
-            phoneNumberPanel = new Panel();
-            JTextField nameField = new JTextField(14), ageField = new JTextField(14), genderField = new JTextField(14), emailField = new JTextField(14),
-            phoneNumberField= new JTextField(14);
-
-            nameField.setText(contactDatabase.get(contactIndex).getFirstName() + " " +contactDatabase.get(contactIndex).getLastName());
-            ageField.setText(contactDatabase.get(contactIndex).getAge());
-            genderField.setText(contactDatabase.get(contactIndex).getGender());
-            emailField.setText(contactDatabase.get(contactIndex).getEmail());
-            phoneNumberField.setText(contactDatabase.get(contactIndex).getPhoneNumber());
-
-            namePanel.add(new JLabel("Name: "));
-            namePanel.add(nameField);
-            agePanel.add(new JLabel("Age: "));
-            agePanel.add(ageField);
-            genderPanel.add(new JLabel("Gender: "));
-            genderPanel.add(genderField);
-            emailPanel.add(new JLabel("Email: "));
-            emailPanel.add(emailField);
-            phoneNumberPanel.add(new JLabel("Phone Number: "));
-            phoneNumberPanel.add(phoneNumberField);
-
-            final Object [] inputs = new Object[] {namePanel,agePanel,genderPanel,emailPanel,phoneNumberPanel};
-            JOptionPane.showMessageDialog(null, inputs,contactDatabase.get(contactIndex).getFirstName() + " " +contactDatabase.get(contactIndex).getLastName() , JOptionPane.PLAIN_MESSAGE, img);
-
-            for(int i = 0; i < nameField.getText().length(); i++){
-                if(("" + nameField.getText().charAt(i)).equals(" ")){
-                    transitionToLast = true;
-                }
-                else if(transitionToLast == false && !("" + nameField.getText().charAt(i)).equals(" ")){
-                    firstName +=nameField.getText().charAt(i);
-                }
-                else if(transitionToLast == true && !("" + nameField.getText().charAt(i)).equals(" ")){
-                    lastName +=nameField.getText().charAt(i);
+        if(fullName != null){
+            for(int i = 0; i< contactDatabase.size();i++){
+                if(fullName.equals(contactDatabase.get(i).getFirstName() + " " + contactDatabase.get(i).getLastName())){                
+                    contactIndex = i;
+                    isFound = true;
+                    break;
                 }
             }
 
-            contactDatabase.remove(contactIndex);
-            editedContact = new Contact(firstName, lastName, emailField.getText(), ageField.getText(),
-                genderField.getText(),phoneNumberField.getText(), imgDirectory);
+            img = new ImageIcon("/Users/SuchenTan/Desktop/Digital Diary/Images/" + contactDatabase.get(contactIndex).getImgDirectory());
+            imgDirectory = contactDatabase.get(contactIndex).getImgDirectory();
+            if(isFound == false){
+                JOptionPane.showMessageDialog(frame, "Invalid name","Error", JOptionPane.ERROR_MESSAGE); 
+            }
 
-            addContact(editedContact,contactIndex);
+            else{
+                Panel namePanel = new Panel(), agePanel = new Panel(), genderPanel = new Panel(), emailPanel = new Panel(),
+                phoneNumberPanel = new Panel();
+                JTextField nameField = new JTextField(14), ageField = new JTextField(14), genderField = new JTextField(14), emailField = new JTextField(14),
+                phoneNumberField= new JTextField(14);
 
+                nameField.setText(contactDatabase.get(contactIndex).getFirstName() + " " +contactDatabase.get(contactIndex).getLastName());
+                ageField.setText(contactDatabase.get(contactIndex).getAge());
+                genderField.setText(contactDatabase.get(contactIndex).getGender());
+                emailField.setText(contactDatabase.get(contactIndex).getEmail());
+                phoneNumberField.setText(contactDatabase.get(contactIndex).getPhoneNumber());
+
+                namePanel.add(new JLabel("Name: "));
+                namePanel.add(nameField);
+                agePanel.add(new JLabel("Age: "));
+                agePanel.add(ageField);
+                genderPanel.add(new JLabel("Gender: "));
+                genderPanel.add(genderField);
+                emailPanel.add(new JLabel("Email: "));
+                emailPanel.add(emailField);
+                phoneNumberPanel.add(new JLabel("Phone Number: "));
+                phoneNumberPanel.add(phoneNumberField);
+
+                final Object [] inputs = new Object[] {namePanel,agePanel,genderPanel,emailPanel,phoneNumberPanel};
+                JOptionPane.showMessageDialog(null, inputs,contactDatabase.get(contactIndex).getFirstName() + " " +contactDatabase.get(contactIndex).getLastName() , JOptionPane.PLAIN_MESSAGE, img);
+
+                for(int i = 0; i < nameField.getText().length(); i++){
+                    if(("" + nameField.getText().charAt(i)).equals(" ")){
+                        transitionToLast = true;
+                    }
+                    else if(transitionToLast == false && !("" + nameField.getText().charAt(i)).equals(" ")){
+                        firstName +=nameField.getText().charAt(i);
+                    }
+                    else if(transitionToLast == true && !("" + nameField.getText().charAt(i)).equals(" ")){
+                        lastName +=nameField.getText().charAt(i);
+                    }
+                }
+
+                contactDatabase.remove(contactIndex);
+                editedContact = new Contact(firstName, lastName, emailField.getText(), ageField.getText(),
+                    genderField.getText(),phoneNumberField.getText(), imgDirectory);
+
+                addContact(editedContact,contactIndex);
+
+            }
         }
     }
 
@@ -644,70 +733,71 @@ public class Diary {
 
         DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
 
-        for(int i = 0; i< reminderDatabase.size();i++){
-            if(title.equals(reminderDatabase.get(i).getTitle())){                
-                reminderIndex = i;
-                isFound = true;
-                break;
+        if(title != null){
+            for(int i = 0; i< reminderDatabase.size();i++){
+                if(title.equals(reminderDatabase.get(i).getTitle())){                
+                    reminderIndex = i;
+                    isFound = true;
+                    break;
+                }
             }
-        }
 
-        img = new ImageIcon("/Users/SuchenTan/Desktop/Digital Diary/Images/" + reminderDatabase.get(reminderIndex).getImgDirectory());
-        imgDirectory = reminderDatabase.get(reminderIndex).getImgDirectory();
-        startDate = reminderDatabase.get(reminderIndex).getStartDate();
-        if(isFound == false){
-            JOptionPane.showMessageDialog(frame, "Please enter a valid reminder!");
-        }
-
-        else{
-            Panel alarmMessagePanel = new Panel(), titlePanel = new Panel(), descriptionPanel = new Panel(), dateEndPanel = new Panel(), 
-            locationPanel = new Panel(), dateCreatedPanel = new Panel();
-            JTextField alarmMessageField = new JTextField(14),titleField = new JTextField(14), descriptionField = new JTextField(14), locationField = new JTextField(14), 
-            dateEndField = new JTextField(14);
-
-            titleField.setText(reminderDatabase.get(reminderIndex).getTitle());
-            descriptionField.setText(reminderDatabase.get(reminderIndex).getMessage());
-            dateEndField.setText(reminderDatabase.get(reminderIndex).getEndDate().toString());
-            alarmMessageField.setText(reminderDatabase.get(reminderIndex).getAlarmMessage());
-            locationField.setText(reminderDatabase.get(reminderIndex).getLocation());
-
-            titlePanel.add(new JLabel("Title: "));
-            titlePanel.add(titleField);
-            descriptionPanel.add(new JLabel("Description: "));
-            descriptionPanel.add(descriptionField);
-            dateEndPanel.add(new JLabel("When: "));
-            dateEndPanel.add(dateEndField);
-            locationPanel.add(new JLabel("Where: "));
-            locationPanel.add(locationField);
-            alarmMessagePanel.add(new JLabel("Alarm Message: "));
-            alarmMessagePanel.add(alarmMessageField);
-            
-            final Object [] inputs = new Object[] {titlePanel, descriptionPanel, locationPanel, dateEndPanel, alarmMessagePanel};
-            JOptionPane.showMessageDialog(null, inputs, reminderDatabase.get(reminderIndex).getTitle(), JOptionPane.PLAIN_MESSAGE, img);
-            
-            try{
-               Date test = df.parse(dateEndField.getText());
-            }catch(Exception e){
-                wrongDateFormat = true;
+            img = new ImageIcon("/Users/SuchenTan/Desktop/Digital Diary/Images/" + reminderDatabase.get(reminderIndex).getImgDirectory());
+            imgDirectory = reminderDatabase.get(reminderIndex).getImgDirectory();
+            startDate = reminderDatabase.get(reminderIndex).getStartDate();
+            if(isFound == false){
+                JOptionPane.showMessageDialog(frame, "Invaid event!","Error", JOptionPane.ERROR_MESSAGE); 
             }
-                
-            
-            if(wrongDateFormat == false){
-            reminderDatabase.remove(reminderIndex);
 
-            try{
-                editedReminder = new Reminder(titleField.getText(), descriptionField.getText(), locationField.getText(), alarmMessageField.getText(), startDate,            
-                    df.parse(dateEndField.getText()), imgDirectory);
-            }catch(Exception e){
-                System.out.println("Incorrect date format!!!!");
+            else{
+                Panel alarmMessagePanel = new Panel(), titlePanel = new Panel(), descriptionPanel = new Panel(), dateEndPanel = new Panel(), 
+                locationPanel = new Panel(), dateCreatedPanel = new Panel();
+                JTextField alarmMessageField = new JTextField(14),titleField = new JTextField(14), descriptionField = new JTextField(14), locationField = new JTextField(14), 
+                dateEndField = new JTextField(14);
+
+                titleField.setText(reminderDatabase.get(reminderIndex).getTitle());
+                descriptionField.setText(reminderDatabase.get(reminderIndex).getMessage());
+                dateEndField.setText(reminderDatabase.get(reminderIndex).getEndDate().toString());
+                alarmMessageField.setText(reminderDatabase.get(reminderIndex).getAlarmMessage());
+                locationField.setText(reminderDatabase.get(reminderIndex).getLocation());
+
+                titlePanel.add(new JLabel("Title: "));
+                titlePanel.add(titleField);
+                descriptionPanel.add(new JLabel("Description: "));
+                descriptionPanel.add(descriptionField);
+                dateEndPanel.add(new JLabel("When: "));
+                dateEndPanel.add(dateEndField);
+                locationPanel.add(new JLabel("Where: "));
+                locationPanel.add(locationField);
+                alarmMessagePanel.add(new JLabel("Alarm Message: "));
+                alarmMessagePanel.add(alarmMessageField);
+
+                final Object [] inputs = new Object[] {titlePanel, descriptionPanel, locationPanel, dateEndPanel, alarmMessagePanel};
+                JOptionPane.showMessageDialog(null, inputs, reminderDatabase.get(reminderIndex).getTitle(), JOptionPane.PLAIN_MESSAGE, img);
+
+                try{
+                    Date test = df.parse(dateEndField.getText());
+                }catch(Exception e){
+                    wrongDateFormat = true;
+                }
+
+                if(wrongDateFormat == false){
+                    reminderDatabase.remove(reminderIndex);
+
+                    try{
+                        editedReminder = new Reminder(titleField.getText(), descriptionField.getText(), locationField.getText(), alarmMessageField.getText(), startDate,            
+                            df.parse(dateEndField.getText()), imgDirectory);
+                    }catch(Exception e){
+                        System.out.println("Incorrect date format!!!!");
+                    }
+                    addReminder(editedReminder,reminderIndex);
+                }
+                else if(wrongDateFormat == true)
+                {
+                    JOptionPane.showMessageDialog(frame, "Invaid date format!","Error", JOptionPane.ERROR_MESSAGE);            
+                }
+
             }
-            addReminder(editedReminder,reminderIndex);
-        }
-        else if(wrongDateFormat == true)
-        {
-            JOptionPane.showMessageDialog(frame, "Invaid date format!","Error", JOptionPane.ERROR_MESSAGE);            
-        }
-
         }
     }
 
@@ -751,7 +841,7 @@ public class Diary {
         }
 
         if(isFound == false){
-            JOptionPane.showMessageDialog(frame, "Please enter a valid name!");
+            JOptionPane.showMessageDialog(frame, "Invalid name!!","Error", JOptionPane.ERROR_MESSAGE); 
         }
 
         else{
@@ -838,7 +928,7 @@ public class Diary {
         }
 
         if(isFound == false){
-            JOptionPane.showMessageDialog(frame, "Please enter a valid reminder!");
+            JOptionPane.showMessageDialog(frame, "Invalid event!","Error", JOptionPane.ERROR_MESSAGE); 
         }
 
         else{
