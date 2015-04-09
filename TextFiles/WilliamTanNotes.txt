@@ -8,5 +8,3 @@ Diary Application Features:
 2. Sleek Design: Login and transitioning.
 3. User Friendly: Includes complex failsafes and intuitive UI.
 4. Advanced Saving: Data is read from and saved to text files.
-
-

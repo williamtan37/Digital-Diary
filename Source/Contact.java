@@ -19,9 +19,16 @@ public class Contact
     {
         return lastName;
     }
+    public String getEmail(){
+        return email;
+    }
     public String getAge()
     {
         return age;
+    }
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
     }
     public String getGender()
     {
@@ -31,6 +38,27 @@ public class Contact
     {
         return imgDirectory;
     }
+    public void setFirstName(String newFirstName)
+    {
+        firstName = newFirstName;
+    }
+    public void setLastName(String newLastName)
+    {
+        lastName = newLastName;
+    }
+    public void setEmail(String newEmail)
+    {
+        email = newEmail;
+    }
+    public void setGender(String newGender)
+    {
+        gender = newGender;
+    }
+    public void setAge(String newAge)
+    {
+        age = newAge;
+    }
+    
         
     public String toStringGUI()
     {

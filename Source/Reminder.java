@@ -14,6 +14,21 @@ public class Reminder
         this.imgDirectory = imgDirectory;
     }
     
+    public String getMessage(){
+        return message;
+    }
+    public String getLocation(){
+        return location;
+    }
+    public String getAlarmMessage(){
+        return alarmMessage;
+    }
+    public Date getStartDate(){
+        return startDate;
+    }
+    public Date getEndDate(){
+        return endDate;
+    }
     public String getTitle()
     {
         return title;
@@ -28,6 +43,8 @@ public class Reminder
     {
         return imgDirectory;
     }
+    
+    
     public String toStringGUI()
     {
         String result;
