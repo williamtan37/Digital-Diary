@@ -1,2 +1,3 @@
 FIRST NAME | LAST NAME | AGE | GENDER | EMAIL | PASSWORD | CONTACT LIST | REMINDER LIST | NOTES LIST
+William|Tan|17|Male|williamtan37@gmail.com|momom123|WilliamTanContacts.txt|WilliamTanReminder.txt|WilliamTanNotes.txt
 William|Tan|17|Male|a|a|WilliamTanContacts.txt|WilliamTanReminder.txt|WilliamTanNotes.txt

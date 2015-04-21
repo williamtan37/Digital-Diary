@@ -1,17 +1,17 @@
 FIRST NAME | LAST NAME | EMAIL | AGE | GENDER | PHONE NUMBER | PICTURE DIRECTORY
-Jessica|Kim|jessicakim@gmail.com|16|Female|(310)123-1234|contacts1.png
-Brandon|Lin|brandonlin@gmail.com|34|Male|(310)123-1234|contacts2.png
-Ariana|Bai|arianabai@gmail.com|83|Female|(310)123-1234|contacts3.png
-James|Smith|jamessmith@gmail.com|46|Male|(310)123-1234|contacts4.png
-John|Brown|johnbrown@gmail.com|78|Male|(310)123-1234|contacts5.png
-Robert|Miller|robertmiller@gmail.com|34|Male|(310)123-1234|contacts6.png
-Rebecca|Lee|rebeccalee@gmail.com|43|Female|(310)123-1234|contacts7.png
-Thomas|Jones|thomasjones@gmail.com|23|Male|(310)123-1234|contacts8.png
-Brianna|Lewis|briannalewis@gmail.com|45|Female|(310)123-1234|contacts9.png
-Grace|Martin|christophermartin@gmail.com|56|Female|(310)123-1234|contacts10.png
-George|Clark|georgeclark@gmail.com|45|Male|(310)123-1234|contacts11.png
-Dennis|Murphy|dennismurphy@gmail.com|56|Male|(310)123-1234|contacts12.png
-Nicole|Kim|nicolekim@gmail.com|42|Female|(310)123-1234|contacts13.png
-Barack|Obama|barackobama@gmail.com|34|Male|(310) 123-1234|contacts14.png
-Patrick|Collins|patrickcollins@gmail.com|18|Male|(310) 123-1234|contacts15.png
 Andrew|Choi|andrewchoi@gmail.com|45|Male|(310) 123-1234|contacts16.png
+Ariana|Bai|arianabai@gmail.com|83|Female|(310)123-1234|contacts3.png
+Barack|Obama|barackobama@gmail.com|34|Male|(310) 123-1234|contacts14.png
+Brandon|Lin|brandonlin@gmail.com|34|Male|(310)123-1234|contacts2.png
+Brianna|Lewis|briannalewis@gmail.com|45|Female|(310)123-1234|contacts9.png
+Dennis|Murphy|dennismurphy@gmail.com|56|Male|(310)123-1234|contacts12.png
+George|Clark|georgeclark@gmail.com|45|Male|(310)123-1234|contacts11.png
+Grace|Martin|christophermartin@gmail.com|56|Female|(310)123-1234|contacts10.png
+James|Smith|jamessmith@gmail.com|46|Male|(310)123-1234|contacts4.png
+Jessica|Kim|jessicakim@gmail.com|16|Female|(310)123-1234|contacts1.png
+John|Brown|johnbrown@gmail.com|78|Male|(310)123-1234|contacts5.png
+Nicole|Kim|nicolekim@gmail.com|42|Female|(310)123-1234|contacts13.png
+Patrick|Collins|patrickcollins@gmail.com|18|Male|(310) 123-1234|contacts15.png
+Rebecca|Lee|rebeccalee@gmail.com|43|Female|(310)123-1234|contacts7.png
+Robert|Miller|robertmiller@gmail.com|34|Male|(310)123-1234|contacts6.png
+Thomas|Jones|thomasjones@gmail.com|23|Male|(310)123-1234|contacts8.png

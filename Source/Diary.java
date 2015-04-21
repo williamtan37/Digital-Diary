@@ -232,16 +232,51 @@ public class Diary {
         frame.remove(passwordLabel);
         frame.remove(signInButton);
 
-        //loadingAnimation();
+        loadingAnimation();
 
         Timer timer = new Timer();
 
-        // timer.schedule( new TimerTask(){
-        //       public void run(){
-        //        frame.remove(loadingLabel);
-        loadUI();
-        //   }
-        //},1000);
+        timer.schedule( new TimerTask(){
+                public void run(){
+                    frame.remove(loadingLabel);
+                    loadUI();
+                    checkReminders();
+                }
+            },1000);
+
+    }
+
+    public void checkReminders()
+    {
+        LinkedList<Reminder> remindersToday = new LinkedList();
+        Date today = new Date();
+        int numReminderToday = 0;
+
+        for(int i = 0; i< reminderDatabase.size(); i++)
+        {
+
+            if(today.getDay() == reminderDatabase.get(i).getEndDate().getDay() && today.getYear() == reminderDatabase.get(i).getEndDate().getYear() 
+            && today.getMonth() == reminderDatabase.get(i).getEndDate().getMonth())
+            {
+                numReminderToday++;
+                remindersToday.add(reminderDatabase.get(i));
+            }
+        }
+
+        if(numReminderToday > 0){
+            String[] buttons = {"Ok", "View Events"};    
+            int returnValue = JOptionPane.showOptionDialog(null, "You have " + numReminderToday + " event(s) scheduled today!", " Urgent Reminder",JOptionPane.DEFAULT_OPTION, 0, transparentImg, buttons, null);
+
+            if(returnValue == 1){
+                for(int i = 0; i< remindersToday.size(); i++)
+                {
+                    Icon img = new ImageIcon("/Users/SuchenTan/Desktop/Digital Diary/Images/" + remindersToday.get(i).getImgDirectory());
+                    JOptionPane.showMessageDialog(frame,remindersToday.get(i).toStringGUI(),remindersToday.get(i).toString(),1,img);
+
+                }
+
+            }
+        }
     }
 
     ImageIcon loadingIcon;
@@ -450,7 +485,34 @@ public class Diary {
                     }
                 }
             });
+
     }
+    /*
+    private class MyCellRender extends DefaultListCellRenderer {
+    @Override
+    public Component getListCellRendererComponent(JList<E> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+    if(today.getDay() == reminderDatabase.get(i).getEndDate().getDay() && today.getYear() == reminderDatabase.get(i).getEndDate().getYear() 
+    && today.getMonth() == reminderDatabase.get(i).getEndDate().getMonth()) {
+    Color fg = value.toString().contains("COMPLETED") ? Color.green : Color.red;
+    setForeground(fg);
+    } else {
+    setForeground(list.getForeground());
+    }
+    return this;
+    }
+    }
+     */
+    /*
+    public Component getListCellRendererComponent(JList list) {
+    Component c = super.getListCellRendererComponent();
+    ListModel mode= list.getModel();
+
+    for(int i=0; i< model.getSize(); i++){
+    }
+
+    for(int i
+    }*/
 
     public void reminderOptions(int optionValue)
     {
@@ -472,7 +534,7 @@ public class Diary {
         }
         else if(optionValue == 3){
             String title = JOptionPane.showInputDialog("What do you want to call your event?");
-            String message = JOptionPane.showInputDialog("How do you want tp describe your event?");
+            String message = JOptionPane.showInputDialog("How do you want to describe your event?");
             String location = JOptionPane.showInputDialog("Where will your event be?");
             String endDateString = JOptionPane.showInputDialog("When will it take place?");
             String alarm = JOptionPane.showInputDialog("What do you want your alarm to say");
@@ -541,7 +603,6 @@ public class Diary {
                 });
         }
 
-        
         reminderList.setListData(reminderDatabase.toArray());
         validateAndRepaint();
         updateTextFile("Reminder");
@@ -884,22 +945,23 @@ public class Diary {
             textOutputStream = new BufferedWriter(new FileWriter(targetFileDirectory,true));
             try{
                 textOutputStream.write(targetFileTitle);
-                textOutputStream.newLine();
 
                 if(type.equalsIgnoreCase("Contact")){
                     for(int i = 0; i < contactDatabase.size(); i++){
+                        textOutputStream.newLine();
                         textOutputStream.write(contactDatabase.get(i).getFirstName() + "|" + contactDatabase.get(i).getLastName() + "|" +
                             contactDatabase.get(i).getEmail() + "|" + contactDatabase.get(i).getAge() + "|" + contactDatabase.get(i).getGender() + "|" +
                             contactDatabase.get(i).getPhoneNumber() + "|" + contactDatabase.get(i).getImgDirectory());
-                        textOutputStream.newLine();
+
                     }
                 }
                 else if(type.equalsIgnoreCase("Reminder")){
                     for(int i = 0; i < reminderDatabase.size(); i++){
+                        textOutputStream.newLine();
                         textOutputStream.write(reminderDatabase.get(i).getTitle() + "|" + reminderDatabase.get(i).getMessage()
                             + "|" + reminderDatabase.get(i).getLocation() + "|" +reminderDatabase.get(i).getAlarmMessage()+"|"+ reminderDatabase.get(i).getStartDate()
                             + "|" + reminderDatabase.get(i).getEndDate() + "|" + reminderDatabase.get(i).getImgDirectory());
-                        textOutputStream.newLine();
+
                     }
                 }
 
